@@ -1,21 +1,34 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { View, Text, SafeAreaView } from "react-native";
+import { Provider } from "react-redux";
+import Demo from "./src/components/Demo";
+import LoginScreen from "./src/screens/LoginScreen/LoginScreen";
+import RegisterScreen from "./src/screens/RegisterScreen/RegisterScreen";
+import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
+import { store } from "./src/state/store";
+import { background } from "./src/constants/color";
 
-export default function App() {
+const App = () => {
+  const theme = {
+    ...DefaultTheme,
+    roundness: 10,
+    colors: {
+      ...DefaultTheme.colors,
+      primary: "#3498db",
+      accent: "#f1c40f",
+    },
+  };
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={store}>
+      <PaperProvider theme={theme}>
+        <SafeAreaView>
+          <View style={{backgroundColor:background}}>
+            <RegisterScreen />
+          </View>
+        </SafeAreaView>
+      </PaperProvider>
+    </Provider>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
