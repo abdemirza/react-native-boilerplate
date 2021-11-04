@@ -1,6 +1,7 @@
 const initialState = {
   isLoggedIn : false,
   user : {},
+  loading:false,
 }
 
 export const authReducer = (state=initialState, action) => {
