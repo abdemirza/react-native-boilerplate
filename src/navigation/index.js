@@ -1,13 +1,16 @@
 import { NavigationContainer } from "@react-navigation/native";
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, SafeAreaView, Platform } from "react-native";
 import StackNavigator from "./StackNavigator";
 
 const RootNavigator = () => {
   return (
-    <NavigationContainer>
-      <StackNavigator />
-    </NavigationContainer>
+    <SafeAreaView style={{flex:1,paddingTop: Platform.OS === 'android' ? 25 : 0}}>
+     <NavigationContainer>
+        <StackNavigator />
+      </NavigationContainer>
+    </SafeAreaView>
+ 
   );
 };
 
