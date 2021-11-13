@@ -10,6 +10,7 @@ const RootNavigator = () => {
         <StackNavigator />
       </NavigationContainer>
     </SafeAreaView>
+    
  
   );
 };

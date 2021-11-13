@@ -24,8 +24,10 @@ const RegisterScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const navigator = useNavigation();
-  
+  const navigation = useNavigation();
+  const buttonHandler = ()=>{
+    navigation.navigate('Home')
+  }
   return (
     <View style={styles.container}>
       <View style={{ alignItems: "center", padding: 10 }}>
@@ -60,12 +62,12 @@ const RegisterScreen = () => {
         onChangeText={value => setConfirmPassword(value)}
       />
 
-      <CustomButton mode="contained" onPress={() => console.warn("hello")}>
+      <CustomButton mode="contained" onPress={() => buttonHandler()}>
         Sign Up
       </CustomButton>
       <View style={styles.linkContainer}>
         <Text>Already a member?</Text>
-        <Pressable onPress={() => navigator.navigate("Login")}>
+        <Pressable onPress={() => navigation.navigate("Login")}>
           <Text style={styles.link}>Login</Text>
         </Pressable>
       </View>
@@ -76,7 +78,6 @@ const RegisterScreen = () => {
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    marginTop: "15%",
     height: "100%",
     backgroundColor: background,
   },

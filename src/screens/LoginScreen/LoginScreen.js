@@ -20,7 +20,7 @@ import {
 import facebook from "../../assets/images/facebook.png";
 import { useNavigation } from "@react-navigation/core";
 const LoginScreen = () => {
-  const navigator = useNavigation();
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <View style={{ alignItems: "center", padding: 10 }}>
@@ -45,12 +45,12 @@ const LoginScreen = () => {
         secureTextEntry={true}
       />
 
-      <CustomButton mode="contained" onPress={() => console.warn("hello")}>
+      <CustomButton mode="contained" onPress={() => navigation.navigate('Cart')}>
         Login
       </CustomButton>
       <View style={styles.linkContainer}>
         <Text>Not a member?</Text>
-        <Pressable onPress={() => navigator.navigate("Register")}>
+        <Pressable onPress={() => navigation.navigate("Register")}>
           <Text style={styles.link}>Register</Text>
         </Pressable>
       </View>
@@ -61,7 +61,6 @@ const LoginScreen = () => {
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    marginTop: "15%",
     height: "100%",
     backgroundColor: background,
   },
