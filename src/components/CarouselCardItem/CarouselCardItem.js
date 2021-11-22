@@ -1,14 +1,24 @@
 import React from "react";
-import { View, Text, StyleSheet, Dimensions, Image } from "react-native";
-
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  Image,
+  Pressable,
+} from "react-native";
+import * as RootNavigation from '../../navigation/index'
 export const SLIDER_WIDTH = Dimensions.get("window").width + 80;
 export const ITEM_WIDTH = Math.round(SLIDER_WIDTH);
 
 const CarouselCardItem = ({ item, index }) => {
+  
   return (
-    <View style={styles.container} key={index}>
-      <Image source={{ uri: item.imgUrl }} style={styles.image} />
-    </View>
+    <Pressable onPress={() => RootNavigation.navigate('Cart')}>
+      <View style={styles.container} key={index}>
+        <Image source={{ uri: item.imgUrl || item }} style={styles.image} />
+      </View>
+    </Pressable>
   );
 };
 const styles = StyleSheet.create({
@@ -16,7 +26,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 8,
     width: ITEM_WIDTH,
-    marginVertical: 15,
+    // marginVertical: 15,
   },
   image: {
     width: ITEM_WIDTH,

@@ -2,25 +2,49 @@ import React from "react";
 import { View, Text, StyleSheet, ScrollView, Pressable } from "react-native";
 import CarouselCards from "../../components/CarouselCards/CarouselCards";
 import ProductCarouselItem from "../../components/ProductCarouselItem/ProductCarouselItem";
-import { grey } from "../../constants/color";
+import { green, grey, orange } from "../../constants/color";
 import { products } from "../../data/dummyData";
 import CustomButton from "../../components/CustomButton/CustomButton";
 import { useNavigation } from "@react-navigation/core";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
-const ProductScreen = () => {
+import { useDispatch, useSelector } from "react-redux";
+import { addItem } from "../../state/actions";
+import  'react-native-get-random-values';
+import { nanoid } from 'nanoid'
+
+const ProductScreen = ({route}) => {
+  const {product} = route.params;
   const navigation = useNavigation();
+  const [size,setSize] = React.useState(null);
+  const dispatch = useDispatch();
   const discount = Math.round(
-    ((products[0].originalPrice[0] - products[0].price[0]) /
-      products[0].originalPrice[0]) *
+    ((product.originalPrice[0] - product.price[0]) /
+      product.originalPrice[0]) *
       100
   );
+  const sizeHandler = (size)=>{
+    setSize(size);
+  }
+  const bagHandler = ()=>{
+    const item = {
+      id:nanoid(),
+      brand:product.brand,
+      title:product.title,
+      size: size,
+      price:product.price[0],
+      originalPrice:product.originalPrice[0],
+      imageUri:product.images[0]
+    }
+
+    dispatch(addItem(item))
+  }
 
   return (
     <ScrollView>
       <CarouselCards
         loop={true}
-        images={products[0].images}
+        images={product.images}
         component={ProductCarouselItem}
       />
       <View
@@ -53,15 +77,15 @@ const ProductScreen = () => {
       <View style={styles.titleContainer}>
         <View style={styles.productTitle}>
           <Text style={{ width: "60%" }}>
-            <Text style={styles.brand}>{`${products[0].brand}  `}</Text>
-            {products[0].title}
+            <Text style={styles.brand}>{`${product.brand}  `}</Text>
+            {product.title}
           </Text>
         </View>
         <View style={styles.priceContainer}>
           <Text
             style={styles.originalPrice}
-          >{`₹ ${products[0].originalPrice[0]}`}</Text>
-          <Text style={styles.brand}>{`₹ ${products[0].price[0]}`}</Text>
+          >{`₹ ${product.originalPrice[0]}`}</Text>
+          <Text style={styles.brand}>{`₹ ${product.price[0]}`}</Text>
           <Text style={styles.discount}>({discount}% OFF)</Text>
         </View>
         <Text style={styles.tax}>inclusive of all taxes</Text>
@@ -78,26 +102,27 @@ const ProductScreen = () => {
       <View style={styles.sizeContainer}>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Text style={{ fontWeight: "bold", color: grey }}>Select Size</Text>
-          <Text style={{ color: "red", fontWeight: "bold" }}>Size Chart</Text>
+          <Text style={{ color: orange, fontWeight: "bold" }}>Size Chart</Text>
         </View>
         <View style={styles.sizeCircleContainer}>
-          {Object.keys(products[0].sizes).map((size, idx) => (
+          {Object.keys(product.sizes).map((localSize, idx) => (
+            <Pressable  key={localSize} onPress={()=>sizeHandler(localSize)}>
             <View
               style={{
                 justifyContent: "space-evenly",
                 height: 80,
                 paddingHorizontal: 5,
               }}
-              key={size}
+        
             >
-              <View key={size} style={styles.sizeCircle}>
-                <Text>{size}</Text>
+              <View key={localSize} style={[styles.sizeCircle,{borderColor:size==localSize?orange: '#000'}]}>
+                <Text>{localSize}</Text>
               </View>
               {
                 <View
                   style={{
                     borderColor:
-                      products[0].sizes[size] < 5 ? "red" : "transparent",
+                      product.sizes[localSize] < 5 ? orange : "transparent",
                     borderWidth: 1,
                     padding: 2,
                     width: 45,
@@ -106,20 +131,21 @@ const ProductScreen = () => {
                   }}
                 >
                   <Text style={{ fontSize: 13 }}>
-                    {products[0].sizes[size] < 5
-                      ? `${products[0].sizes[size]} Left`
+                    {product.sizes[localSize] < 5
+                      ? `${product.sizes[localSize]} Left`
                       : ""}{" "}
                   </Text>
                 </View>
               }
             </View>
+            </Pressable>
           ))}
         </View>
         <View style={styles.buttonContainer}>
           <CustomButton
             mode="contained"
             icon="heart-outline"
-            style={{ backgroundColor: "red", width: 170 }}
+            style={{ backgroundColor: orange, width: 170 }}
           >
             WISHLIST
           </CustomButton>
@@ -127,6 +153,8 @@ const ProductScreen = () => {
             icon="bag-checked"
             mode="contained"
             style={{ width: 170 }}
+            disabled={size===null}
+            onPress={()=>bagHandler()}
           >
             ADD TO BAG
           </CustomButton>
@@ -200,7 +228,7 @@ const styles = StyleSheet.create({
     color: grey,
   },
   tax: {
-    color: "#35ac7a",
+    color: green,
     fontWeight: "bold",
   },
 });

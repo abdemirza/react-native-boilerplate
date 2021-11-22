@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
+import { frameColor } from '../../constants/color';
 
-const ImageFrame = ({ item, index }) => {
-  if (item)
+const ImageFrame = ({ item, index,width=200,height=230,frameColor }) => {
+  if (item!==undefined)
     return (
-      <View style={styles.container} key={index}>
-        <View style={styles.imageContainer}>
+      <View style={[styles.container,{width,height}]} key={index}>
+        <View style={[styles.imageContainer,{backgroundColor:frameColor}]}>
           <Image
             source={{
               uri: item.imgUrl,
@@ -15,7 +16,7 @@ const ImageFrame = ({ item, index }) => {
         </View>
         <View style={styles.textContainer}>
           <Text style={styles.heading}>{item.title}</Text>
-          <Text style={styles.subHeading}>hidhji</Text>
+          <Text style={styles.subHeading}>{item.body}</Text>
         </View>
       </View>
     );
@@ -25,14 +26,14 @@ const styles = StyleSheet.create({
   container: {
     width: 200,
     height: 230,
-    backgroundColor: "#55423d",
+    backgroundColor: frameColor,
     // justifyContent: 'center',
     marginHorizontal: 5,
     alignItems: "center",
   },
   imageContainer: {
-    width: "90%",
-    height: 160,
+    width: "85%",
+    height:"70%",
     backgroundColor: "white",
     marginTop: 10,
   },

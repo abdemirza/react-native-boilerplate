@@ -1,20 +1,24 @@
+import { useNavigation } from "@react-navigation/core";
 import React from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView, Pressable } from "react-native";
 import { Button } from "react-native-paper";
 import Tab from "../../components/Tab/Tab";
 import { grey } from "../../constants/color";
 
 const ProfileScreen = () => {
+  const navigation = useNavigation();
   return (
     <ScrollView>
       <View style={styles.headingContainer}>
         <Text style={styles.heading}>Profile</Text>
       </View>
-      <Tab
-        heading="Orders"
-        subHeading="Check your order status"
-        iconName="cart-outline"
-      />
+      <Pressable onPress={()=>navigation.navigate('Orders')}>
+        <Tab
+          heading="Orders"
+          subHeading="Check your order status"
+          iconName="cart-outline"
+        />
+      </Pressable>
       <Tab
         heading="Wishlist"
         subHeading="Your most loved styles"
@@ -67,7 +71,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 40,
     justifyContent: "space-evenly",
     height: 200,
-    marginTop:20,
+    marginTop: 20,
   },
   heading: {
     fontWeight: "bold",

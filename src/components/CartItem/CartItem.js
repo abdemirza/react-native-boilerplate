@@ -1,70 +1,96 @@
 import React from "react";
 import { View, Text, Image, Pressable } from "react-native";
 import { StyleSheet } from "react-native";
-import { AntDesign } from '@expo/vector-icons';
-const CartItem = () => {
-    const [quantity,setQuantity] = React.useState(1)
-    const quantityHandler = (operation)=>{
-        switch (operation){
-            case 'INCREMENT':
-                setQuantity(quantity+1)
-                break;
-                case 'DECREMENT':
-                setQuantity(quantity-1);
-        }
+import { AntDesign } from "@expo/vector-icons";
+import { grey, lightGrey } from "../../constants/color";
+import { useDispatch } from "react-redux";
+import { removeItem } from "../../state/actions";
+import { useSelector } from "react-redux";
 
+const CartItem = ({ item }) => {
+  const cartItems = useSelector((state) => state.cart.items);
+  const [quantity, setQuantity] = React.useState(1);
+  const dispatch = useDispatch();
+  const quantityHandler = (operation) => {
+    switch (operation) {
+      case "INCREMENT":
+        setQuantity(quantity + 1);
+        break;
+      case "DECREMENT":
+        setQuantity(quantity - 1);
     }
-if(quantity>0)
-  return (
-    <View style={styles.container}>
-      <Image source={{uri:'https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=988&q=80'}} style={styles.image} />
-      <View style={styles.productDetails}>
-        <Text style={styles.productName}>AKG N700CM2 Wireless Headphones</Text>
-        <Text style={styles.productPrice}>$199.00(-$4.00 Tax)</Text>
-        <View style={styles. productQuantity}>
-            <Pressable onPress={()=>quantityHandler('DECREMENT')}>
-        <AntDesign name="minuscircleo" size={24} color="grey" />
-        </Pressable>
-        <Text>{quantity}</Text>
-            <Pressable onPress={()=>quantityHandler('INCREMENT')}>
-        <AntDesign name="pluscircleo" size={24} color="grey" />
-        </Pressable>
+  };
+  if (quantity > 0)
+    return (
+      <View style={styles.container}>
+        <Image source={{ uri: item.imageUri }} style={styles.image} />
+        <View style={styles.productDetails}>
+          <Text style={styles.productBrand}>{item.brand}</Text>
+
+          <Text numberOfLines={1} style={styles.productTitle}>
+            {item.title}
+          </Text>
+          <View style={styles.sizeQuantityContainer}>
+            <View style={styles.sizeContainer}>
+              <Text style={{ fontWeight: "600" }}>Size: {item.size}</Text>
+            </View>
+            
+          </View>
+
+          <Text style={styles.productPrice}>₹ {item.price}</Text>
         </View>
+        <Pressable onPress={() => dispatch(removeItem(cartItems, item.id))}>
+          <Text style={{ padding: 5 }}>X</Text>
+        </Pressable>
       </View>
-    </View>
-  );
-  return(
-      <></>
-  )
+    );
+  return <></>;
 };
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    paddingHorizontal:15,
-    paddingVertical:5,
+    paddingHorizontal: 15,
+    paddingVertical: 5,
+    backgroundColor: "#fff",
+    marginVertical: 5,
+    width: "100%",
+    justifyContent: "space-evenly",
   },
-  productDetails:{
-      padding:15,
-      justifyContent:'space-between',
+  productBrand: {
+    fontWeight: "bold",
+    padding: 0,
   },
-  image:{
-      width:120,
-      height:120,
-      borderRadius:20,
+  productDetails: {
+    padding: 15,
+    height: 140,
+    width: "70%",
+    justifyContent: "space-between",
   },
-  productName:{
-      fontWeight:'bold',
-      width:'98%',
+  image: {
+    width: 120,
+    height: 150,
   },
-  productQuantity:{
-      width:80,
-      flexDirection:'row',
-      alignItems: "center",
-      justifyContent:'space-between'
+  productTitle: {
+    width: "80%",
+    paddingVertical: 0,
+    marginVertical: 0,
   },
-  productPrice:{
-      color:'grey'
-  }
+  sizeContainer: {
+    backgroundColor: lightGrey,
+    width: 70,
+    alignItems: "center",
+  },
+  productQuantity: {
+    width: 80,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  productPrice: {
+    fontWeight: "bold",
+    marginTop: 10,
+  },
+  sizeQuantityContainer: {flexDirection: "row"}
 });
 export default CartItem;

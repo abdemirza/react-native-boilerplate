@@ -9,7 +9,7 @@ import RootNavigator from "./src/navigation";
 const App = () => {
   const theme = {
     ...DefaultTheme,
-    roundness: 10,
+    roundness: 3,
     colors: {
       ...DefaultTheme.colors,
       primary: "#3498db",

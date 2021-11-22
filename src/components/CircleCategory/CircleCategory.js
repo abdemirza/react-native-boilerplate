@@ -1,18 +1,22 @@
+import { useNavigation } from "@react-navigation/core";
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 
-const CircleCategory = ({ title,uri }) => {
+const CircleCategory = ({ title, uri }) => {
+  const navigation = useNavigation();
   return (
-    <View style={styles.container}>
-      <Image source={{uri}} style={styles.circleContainer} />
-      <Text>{title}</Text>
-    </View>
+    <Pressable onPress={() => navigation.navigate('Products',{title})}>
+      <View style={styles.container}>
+        <Image source={{ uri }} style={styles.circleContainer} />
+        <Text>{title}</Text>
+      </View>
+    </Pressable>
   );
 };
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 5,
-    height:110,
+    height: 110,
     justifyContent: "space-between",
     alignItems: "center",
   },

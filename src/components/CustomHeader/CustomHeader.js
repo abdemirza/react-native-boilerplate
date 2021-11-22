@@ -1,21 +1,24 @@
 import React from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { secondary } from "../../constants/color";
-import { Entypo } from "@expo/vector-icons";
+import { Entypo, MaterialIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
+import Icon from "react-native-vector-icons/SimpleLineIcons";
 import { useNavigation } from "@react-navigation/core";
-const CustomHeader = ({ title }) => {
+import { useSelector } from "react-redux";
+const CustomHeader = ({ title, mode }) => {
+  const cart = useSelector((state) => state.cart);
   const navigation = useNavigation();
-  const iconHandler = ()=>{
-    if(title==='Cart')
-    navigation.pop();
-  }
+  const iconHandler = () => {
+    if (mode === "home") navigation.navigate("Home");
+    else navigation.pop();
+  };
   const cartHandler = () => {
     navigation.navigate("Cart");
   };
   const icon =
-    title === "Cart" ? (
+    title !== "Home" ? (
       <AntDesign
         name="arrowleft"
         style={styles.iconContainer}
@@ -33,17 +36,37 @@ const CustomHeader = ({ title }) => {
   return (
     <View style={styles.container}>
       <View style={styles.leftContainer}>
-        <Pressable onPress={()=>{iconHandler()}}>{icon}</Pressable>
-        <Text style={styles.textContainer}>{title}</Text>
+        <Pressable
+          onPress={() => {
+            iconHandler();
+          }}
+        >
+          {icon}
+        </Pressable>
+        <Text style={styles.textContainer}>{title || route.param.title}</Text>
       </View>
 
       <Pressable onPress={() => cartHandler()}>
-        <Feather
-          name="shopping-cart"
-          style={styles.iconContainer}
-          size={24}
-          color="black"
-        />
+        <View>
+          <View
+            style={{
+              position: "absolute",
+              backgroundColor: "red",
+              height: 15,
+              width: 15,
+              borderRadius: 8,
+              justifyContent: "center",
+              alignItems: "center",
+              right: 5,
+              top: 5,
+            }}
+          >
+            <Text style={{ color: "#fff" }}>{cart.items.length}</Text>
+          </View>
+          <View style={styles.iconContainer}>
+            <Icon name="bag" size={24} color="black" />
+          </View>
+        </View>
       </Pressable>
     </View>
   );
@@ -52,11 +75,11 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     height: 55,
-    backgroundColor: secondary,
+    backgroundColor: "#fff",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 20,
+    // marginBottom: 20,
   },
   leftContainer: {
     flexDirection: "row",

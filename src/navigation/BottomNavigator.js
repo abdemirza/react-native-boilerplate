@@ -3,7 +3,7 @@ import { createMaterialBottomTabNavigator } from "@react-navigation/material-bot
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import CartScreen from '../screens/CartScreen/CartScreen';
-import { secondary, primary } from '../constants/color';
+import { secondary, primary, orange } from '../constants/color';
 import { Ionicons } from '@expo/vector-icons';
 import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
 
@@ -13,7 +13,7 @@ export const BottomNavigator =  ()=> {
   return (
     <Tab.Navigator
       initialRouteName="Feeds"
-      activeColor={secondary}
+      activeColor={orange}
       barStyle={{ backgroundColor: '#fff'  }}
     >
       <Tab.Screen
