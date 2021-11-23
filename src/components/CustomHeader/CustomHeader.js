@@ -43,7 +43,7 @@ const CustomHeader = ({ title, mode }) => {
         >
           {icon}
         </Pressable>
-        <Text style={styles.textContainer}>{title || route.param.title}</Text>
+        <Text style={styles.textContainer}>{title}</Text>
       </View>
 
       <Pressable onPress={() => cartHandler()}>

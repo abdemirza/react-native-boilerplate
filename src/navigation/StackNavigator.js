@@ -10,6 +10,7 @@ import AddressScreen from "../screens/AddressScreen/AddressScreen";
 import PaymentScreen from "../screens/PaymentScreen/PaymentScreen";
 import OrderScreen from "../screens/OrderScreen/OrderScreen";
 import ProductsScreen from "../screens/ProductsScreen/ProductsScreen";
+import MyDetailsScreen from "../screens/MyDetailsScreen/MyDetailsScreen";
 
 const Stack = createNativeStackNavigator();
 export default function StackNavigator() {
@@ -24,6 +25,7 @@ export default function StackNavigator() {
       <Stack.Screen name="Cart" component={CartScreen} />
       <Stack.Screen name="Product" component={ProductScreen} />
       <Stack.Screen name="Products" component={ProductsScreen} />
+      <Stack.Screen name="MyDetails" component={MyDetailsScreen} />
       <Stack.Screen name="Address" component={AddressScreen} />
       <Stack.Screen name="Payment" component={PaymentScreen} />
       <Stack.Screen name="Orders" component={OrderScreen} />

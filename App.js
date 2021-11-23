@@ -3,16 +3,16 @@ import { View, Text, SafeAreaView } from "react-native";
 import { Provider } from "react-redux";
 import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
 import { store } from "./src/state/store";
-import { background } from "./src/constants/color";
+import { background, orange } from "./src/constants/color";
 import RootNavigator from "./src/navigation";
 
 const App = () => {
   const theme = {
     ...DefaultTheme,
-    roundness: 3,
+    roundness: 1,
     colors: {
       ...DefaultTheme.colors,
-      primary: "#3498db",
+      primary: orange,
       accent: "#f1c40f",
     },
 

@@ -12,7 +12,7 @@ const ProfileScreen = () => {
       <View style={styles.headingContainer}>
         <Text style={styles.heading}>Profile</Text>
       </View>
-      <Pressable onPress={()=>navigation.navigate('Orders')}>
+      <Pressable onPress={() => navigation.navigate("Orders")}>
         <Tab
           heading="Orders"
           subHeading="Check your order status"
@@ -34,11 +34,13 @@ const ProfileScreen = () => {
         subHeading="Manage notification & app settings"
         iconName="account-settings-outline"
       />
-      <Tab
-        heading="Profile Details"
-        subHeading="Change your profile details and password"
-        iconName="file-document-edit-outline"
-      />
+      <Pressable onPress={() => navigation.navigate("MyDetails")}>
+        <Tab
+          heading="Profile Details"
+          subHeading="Change your profile details and password"
+          iconName="file-document-edit-outline"
+        />
+      </Pressable>
       <View style={styles.linksContainer}>
         <Text style={styles.link}>FAQs</Text>
         <Text style={styles.link}>ABOUT US</Text>
